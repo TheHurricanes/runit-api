@@ -1,8 +1,10 @@
-import mongoose from '../services/mongo';
+import mongoose from "../services/mongo";
 
 const CodeSchema = new mongoose.Schema({
-  	content: String,
+	content: String,
 	language: String,
 	owner_id: String,
+	title: String
 });
-export default mongoose.model('Code', CodeSchema, 'codes');
+
+export default mongoose.model("Code", CodeSchema, "codes");

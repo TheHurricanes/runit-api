@@ -14,7 +14,8 @@ const UserSchema = new mongoose.Schema({
 		]
 	},
 	name: String,
-	avatar: String
+	avatar: String,
+	password: String
 });
 
 export default mongoose.model("User", UserSchema, "users");

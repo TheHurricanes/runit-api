@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unassigned-import
 import './env';
 import {Server as httpServer} from 'http';
 import express from 'express';
