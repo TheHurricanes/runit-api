@@ -1,0 +1,9 @@
+node_modules
+npm-debug.log
+.env
+yarn.lock
+.DS_Store
+.vscode
+build/
+now.json
+owner.json
