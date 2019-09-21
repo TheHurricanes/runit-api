@@ -1,7 +1,7 @@
 import mongoose from "../services/mongo";
 
 const UserSchema = new mongoose.Schema({
-	username: String,
+	name: String,
 	email: {
 		type: String,
 		trim: true,
@@ -13,7 +13,6 @@ const UserSchema = new mongoose.Schema({
 			"Please fill a valid email address"
 		]
 	},
-	name: String,
 	avatar: String,
 	password: String
 });

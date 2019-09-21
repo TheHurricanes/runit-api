@@ -2,8 +2,13 @@ import { Router as expressRouter } from "express";
 import { identify } from "../controllers/identify";
 import { compile } from "../controllers/compile";
 import { failureResponse } from "../utils/http-responses";
-import { addCode, getUserSnippets, updateSnippet } from "../controllers/code";
-import { signup, signin, getUser } from "../controllers/user";
+import {
+	addCode,
+	getUserSnippets,
+	updateSnippet,
+	remove
+} from "../controllers/code";
+import { signup, signin, getUser, updateUser } from "../controllers/user";
 
 const router = expressRouter();
 
@@ -22,14 +27,19 @@ router.post("/code", addCode);
 router.get("/user/snippets", getUserSnippets);
 
 /* Update an excisting snippet */
-router.get("/code/update", updateSnippet);
+router.post("/code/update", updateSnippet);
+router.post("/code/remove", remove);
 
-/* Add a new user */
+/* User related API endpoints */
 router.post("/signup", signup);
 
 router.post("/signin", signin);
 
-router.get("/user/get", getUser);
+router.get("/user/info", getUser);
+
+router.post("/user/update", updateUser);
+
+router.post("/upload");
 
 router.use((req, res) => {
 	failureResponse({ res });

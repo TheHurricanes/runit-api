@@ -46,24 +46,59 @@ const getUserSnippets = async (req, res) => {
 };
 
 const updateSnippet = async (req, res) => {
-	if (!req.body.new_content) {
+	if (!req.body.code_id) {
 		failureResponse({
 			res,
-			message: "Missing 'new_content' parameter in the body"
+			message: "Missing 'code_id' parameter in the body"
 		});
+		return;
 	}
+	const snippet = await CodeSnippet.findOne({ _id: req.body.code_id });
+	if (!snippet) {
+		failureResponse({ res, data: "We could not find that snippet of code." });
+	}
+	for (let key in req.body) {
+		if (key == "code_id") {
+			continue;
+		} else if (key == "content") {
+			await CodeSnippet.updateOne(
+				{ _id: req.body.code_id },
+				{ $set: { content: req.body.content } }
+			);
+		} else if (key == "language") {
+			await CodeSnippet.updateOne(
+				{ _id: req.body.code_id },
+				{ $set: { language: req.body.language } }
+			);
+		} else if (key == "title") {
+			await CodeSnippet.updateOne(
+				{ _id: req.body.code_id },
+				{ $set: { title: req.body.title } }
+			);
+		} else {
+			failureResponse({ res, message: "Invalid parameter" });
+			break;
+		}
+	}
+	successResponse({ res, message: "Updated" });
+};
+
+const remove = async (req, res) => {
 	if (!req.body.code_id) {
 		failureResponse({
 			res,
 			message: "Missing 'code_id' parameter in the body"
 		});
 	}
-
-	await CodeSnippet.updateOne(
-		{ _id: req.body.code_id },
-		{ $set: { content: req.body.new_content } }
-	);
-	successResponse({ res });
+	try {
+		const snippets = await CodeSnippet.deleteOne({ _id: req.body.code_id });
+		successResponse({ res, message: "Snipped was removed" });
+	} catch {
+		failureResponse({
+			res,
+			message: "There was a problem removing this snipped"
+		});
+	}
 };
 
-export { addCode, getUserSnippets, updateSnippet };
+export { addCode, getUserSnippets, updateSnippet, remove };

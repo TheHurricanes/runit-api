@@ -3,10 +3,10 @@ import User from "../models/user.model";
 import bcrypt from "bcryptjs";
 
 const signup = async (req, res) => {
-	if (!req.body.username) {
+	if (!req.body.name) {
 		failureResponse({
 			res,
-			message: "Missing 'username' parameter in the body"
+			message: "Missing 'name' parameter in the body"
 		});
 	}
 	if (!req.body.email) {
@@ -15,8 +15,9 @@ const signup = async (req, res) => {
 	if (!req.body.avatar) {
 		failureResponse({ res, message: "Missing 'avatar' parameter in the body" });
 	}
+
 	const user = {
-		username: req.body.username,
+		name: req.body.name,
 		email: req.body.email,
 		avatar: req.body.avatar,
 		password: bcrypt.hashSync(req.body.password, 10)
@@ -72,4 +73,35 @@ const getUser = async (req, res) => {
 	successResponse({ res, data: requrestedUser });
 };
 
-export { signup, signin, getUser };
+const updateUser = async (req, res) => {
+	const { id } = req.body;
+
+	if (!id) {
+		failureResponse({ res, message: "Missing 'id' parameter in the body" });
+	}
+	const user = await User.findOne({ _id: id });
+	if (!user) {
+		failureResponse({ res, data: "We could not find that user." });
+	}
+	for (let key in req.body) {
+		if (key == "id") {
+			continue;
+		} else if (key == "name") {
+			await User.updateOne({ _id: id }, { $set: { name: req.body.name } });
+		} else if (key == "email") {
+			await User.updateOne({ _id: id }, { $set: { email: req.body.email } });
+		} else if (key == "password") {
+			await User.updateOne(
+				{ _id: id },
+				{ $set: { password: req.body.password } }
+			);
+		} else {
+			failureResponse({ res, message: "Invalid parameter" });
+			break;
+		}
+	}
+	successResponse({ res, message: "Updated" });
+};
+
+
+export { signup, signin, getUser, updateUser };
