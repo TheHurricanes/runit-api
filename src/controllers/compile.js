@@ -3,6 +3,15 @@ import endpoints from '../utils/endpoints';
 import { successResponse, failureResponse } from '../utils/http-responses';
 
 const compile = async (req, res) => {
+	/**
+	 * Request Body
+	 * {
+	 * "script": ""
+	 * "language": ""
+	 * }
+	 *
+	*/
+	console.log('Request to compile...')
   if (!req.body.script && !req.body.language) {
     failureResponse({ res, message: "Missing 'script' and 'language' parameters in the body" });
   }
