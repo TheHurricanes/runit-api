@@ -1,4 +1,4 @@
-const buildAlgorithmiaAlgorithm = ({name, author, version}) => {
+const buildAlgorithmiaAlgorithm = ({ name, author, version }) => {
 	return `${author}/${name}/${version}`;
 };
 

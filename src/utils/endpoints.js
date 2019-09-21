@@ -1,3 +1,3 @@
 export default {
-	jdoodle: 'https://api.jdoodle.com/execute'
+	jdoodle: "https://api.jdoodle.com/execute"
 };
