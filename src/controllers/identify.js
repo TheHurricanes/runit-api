@@ -12,6 +12,7 @@ const algorithm = buildAlgorithmiaAlgorithm({
 });
 
 const identify = async (req, res) => {
+	console.log('Request to identify...')
   if (!req.body.imageURL) {
     failureResponse({ res, message: "Missing 'imageURL' parameter in the body" });
   }

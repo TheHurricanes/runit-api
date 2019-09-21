@@ -7,6 +7,7 @@ import socket from 'socket.io';
 import helmet from 'helmet';
 import cors from 'cors';
 import routes from './routes';
+import './services/mongo';
 
 const app = express();
 const server = httpServer(app);
