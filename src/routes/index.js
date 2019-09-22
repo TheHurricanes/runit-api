@@ -9,6 +9,7 @@ import {
 	remove
 } from "../controllers/code";
 import { signup, signin, getUser, updateUser } from "../controllers/user";
+import { QRlogin } from "../controllers/qr-login";
 
 const router = expressRouter();
 
@@ -16,6 +17,8 @@ router.get("/", (req, res) => failureResponse({ res }));
 
 /* Indentify programming language */
 router.post("/identify", identify);
+
+router.get('/qr', QRlogin);
 
 /* Compile snippet */
 router.post("/compile", compile);
